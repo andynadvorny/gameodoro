@@ -16,7 +16,7 @@ export const PlayerContext = createContext({} as PlayerContextData);
 export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
   const [iterationsCompleted, setIterationsCompleted] = useState(0);
 
-  useEffect(() => setIterationsCompleted(rest.iterationsCompleted ?? 0), [])
+  useEffect(() => setIterationsCompleted(rest.iterationsCompleted), [])
 
   useEffect(() => {
     Cookies.set('iterationsCompleted', String(iterationsCompleted));
