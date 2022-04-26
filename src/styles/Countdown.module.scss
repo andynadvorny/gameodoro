@@ -1,0 +1,32 @@
+.container {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  grid-row-gap: 10px;
+  width: 430px;
+  height: 241px;
+  .countdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+  }
+  div{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 7px;
+  }
+  div span{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #FF7070;
+    border-radius: 5px;
+    font-size: 128px;
+  }
+  button {
+    background-color: #181E39;
+    border-radius: 5px;
+    border: 1px solid #FF7070;
+    font-size: 25px;
+    cursor: pointer;
+  }
+}

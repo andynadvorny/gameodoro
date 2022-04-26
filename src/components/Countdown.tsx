@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { CountdownContext } from '../contexts/CountdownContext';
+import styles from '../styles/Countdown.module.scss';
 
 export function Countdown() {
   const { 
@@ -15,13 +16,12 @@ export function Countdown() {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
   
   return (
-    <>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.countdown}>
         <div>
           <span>{minuteLeft}</span>
           <span>{minuteRight}</span>
         </div>
-        <span>:</span>
         <div>
           <span>{secondLeft}</span>
           <span>{secondRight}</span>
@@ -42,6 +42,6 @@ export function Countdown() {
           Iniciar novo ciclo
         </button>
       )}
-    </>
+    </div>
   )
 }
