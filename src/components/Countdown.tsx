@@ -22,6 +22,7 @@ export function Countdown() {
           <span>{minuteLeft}</span>
           <span>{minuteRight}</span>
         </div>
+        <div className={styles.divider}>:</div>
         <div>
           <span>{secondLeft}</span>
           <span>{secondRight}</span>
