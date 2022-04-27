@@ -11,37 +11,42 @@
     grid-area: header;
     position: relative;
   }
+  
   .header::after{
     content: '';
     position: absolute;
     bottom: 0px;
     left: 5%;
     width: 90%;
-    border-bottom: 1px solid #FF7070;
+    border-bottom: 1px solid var(--accent);
   }
+  
   .conteudo1 {
     grid-area: conteudo1;
     display: grid;
     align-content: center;
     justify-content: center;
   }
+  
   .conteudo2 {
     grid-area: conteudo2;
     padding: 20px 20px;    
     display: grid;
     grid-template-rows: 50px auto;
     position: relative;
+    
     h2 {
       text-align: center;
       font-size: 36px;
     }    
   }
+  
   .conteudo2::after{
     content: '';
     position: absolute;
     left: 0px;
     top: 10%;
     height: 80%;
-    border-left: 1px solid #FF7070;
+    border-left: 1px solid var(--accent);
   }
 }

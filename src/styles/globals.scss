@@ -2,10 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #FF7070;
+}
+
+:root {
+  --white: #FFFFFF;
+  --background: #181E39;
+  --accent: #FF7070;
 }
 
 body{
-  background-color: #181E39;
+  color: var(--accent);
+  background-color: var(--background);
   font-family: 'Iceland', cursive;
+}
+
+body, input, button, textarea {
+  font: 400 16px 'Iceland', sans-serif;
 }
