@@ -1,5 +1,10 @@
 import { useContext } from 'react';
+import Image from 'next/image';
 import { CountdownContext } from '../contexts/CountdownContext';
+
+import playButton from '../assets/images/play.svg';
+import resetButton from '../assets/images/reset.svg';
+
 import styles from '../styles/Countdown.module.scss';
 
 export function Countdown() {
@@ -33,14 +38,14 @@ export function Countdown() {
           type="button" 
           onClick={resetCountdown}
         >
-          Resetar ciclo
+          Resetar ciclo <Image src={resetButton} alt='botão de reset' />
         </button>
       ) : (
         <button 
           type="button" 
           onClick={startCountdown}
         >
-          Iniciar novo ciclo
+          Iniciar ciclo <Image src={playButton} alt='botão de play' />
         </button>
       )}
     </div>

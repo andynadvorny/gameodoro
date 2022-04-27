@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 
 import { Countdown } from '../components/Countdown';
 import { PlayerProfile } from '../components/PlayerProfile';
@@ -13,28 +14,33 @@ interface HomeProps {
 
 export default function Home(props: HomeProps) {
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Gameodoro</h1>
-      </header>
-      
-      <div className={styles.conteudo1}>
-        <PlayerProvider
-        iterationsCompleted={props.iterationsCompleted}
-      >
-        <CountdownProvider>
-          <Countdown />
-        </CountdownProvider>
-        <PlayerProfile />
-      </PlayerProvider>
-      </div>
+    <>
+      <Head>
+        <title>Gameodoro</title>
+      </Head>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1>Gameodoro</h1>
+        </header>
+        
+        <div className={styles.conteudo1}>
+          <PlayerProvider
+          iterationsCompleted={props.iterationsCompleted}
+        >
+          <CountdownProvider>
+            <Countdown />
+          </CountdownProvider>
+          <PlayerProfile />
+        </PlayerProvider>
+        </div>
 
-      <div className={styles.conteudo2}>
-        <h2>Tarefas</h2>
-        <div></div>
+        <div className={styles.conteudo2}>
+          <h2>Tarefas</h2>
+          <div></div>
+        </div>
+        
       </div>
-      
-    </div>
+    </>
   )
 }
 

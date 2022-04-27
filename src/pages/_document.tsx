@@ -12,8 +12,8 @@ export default class MyDocument extends Document {
             crossOrigin="true"
           />
           <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet" />
-
-          <link rel="shortcut icon" href="favicon.ico" type="image/ico"/>
+          
+          <link rel="shortcut icon" href="gameodoro.svg" type="image/ico"/>
         </Head>
         <body>
           <Main />

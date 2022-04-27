@@ -31,11 +31,17 @@
   }
   
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
     background-color: var(--background);
     color: var(--accent);
     border-radius: 5px;
     border: 1px solid var(--accent);
     font-size: 25px;
+    text-transform: uppercase;
     cursor: pointer;
   }
 }
