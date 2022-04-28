@@ -4,6 +4,7 @@ import { CountdownContext } from '../contexts/CountdownContext';
 
 import playButton from '../assets/images/play.svg';
 import resetButton from '../assets/images/reset.svg';
+import breakButton from '../assets/images/break.svg';
 
 import styles from '../styles/Countdown.module.scss';
 
@@ -11,8 +12,8 @@ export function Countdown() {
   const { 
     minutes, 
     seconds, 
-    hasFinished, 
     isActive, 
+    isOnBreak,
     startCountdown, 
     resetCountdown 
   } = useContext(CountdownContext);
@@ -21,8 +22,8 @@ export function Countdown() {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
   
   return (
-    <div className={styles.container}>
-      <div className={styles.countdown}>
+    <div className={styles.countdownWrapper}>
+      <div className={`${styles.countdown} ${isOnBreak ? styles.isOnBreak : ''}`}>
         <div>
           <span>{minuteLeft}</span>
           <span>{minuteRight}</span>
@@ -33,20 +34,29 @@ export function Countdown() {
           <span>{secondRight}</span>
         </div>
       </div>
-      { isActive ? (
+      { isOnBreak ? (
         <button 
           type="button" 
-          onClick={resetCountdown}
+          className={styles.breakButton}
         >
-          Resetar ciclo <Image src={resetButton} alt='botão de reset' />
+          Hora do Intervalo <Image src={breakButton} alt='botao intervalo' />
         </button>
       ) : (
-        <button 
-          type="button" 
-          onClick={startCountdown}
-        >
-          Iniciar ciclo <Image src={playButton} alt='botão de play' />
-        </button>
+        isActive ? (
+          <button 
+            type="button" 
+            onClick={resetCountdown}
+          >
+            Resetar ciclo <Image src={resetButton} alt='botão de reset' />
+          </button>
+        ) : (
+          <button 
+            type="button" 
+            onClick={startCountdown}
+          >
+            Iniciar ciclo <Image src={playButton} alt='botão de play' />
+          </button>
+        )
       )}
     </div>
   )
