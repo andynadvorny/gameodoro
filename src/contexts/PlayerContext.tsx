@@ -16,6 +16,10 @@ export const PlayerContext = createContext({} as PlayerContextData);
 export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
   const [iterationsCompleted, setIterationsCompleted] = useState(0);
 
+  useEffect(() => {
+    Notification.requestPermission();
+  }, [])
+
   useEffect(() => setIterationsCompleted(rest.iterationsCompleted ?? 0), [])
 
   useEffect(() => {
@@ -24,6 +28,14 @@ export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
 
   function completeIteration() {
     setIterationsCompleted(iterationsCompleted + 1);
+
+    new Audio('/notification.mp3').play();
+
+    if (Notification.permission === 'granted') {
+      new Notification('New challenge 🎉', {
+        body: `Você ja completou ${iterationsCompleted + 1} ciclos!` 
+      })
+    }
   }
 
   return(
