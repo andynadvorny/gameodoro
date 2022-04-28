@@ -6,6 +6,7 @@ interface CountdownContextData {
   seconds: number;
   hasFinished: boolean;
   isActive: boolean;
+  isOnBreak: boolean;
   startCountdown: () => void;
   resetCountdown: () => void;
 }
@@ -24,6 +25,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const [time, setTime] = useState(0.1 * 60);
   const [isActive, setActive] = useState(false);
   const [hasFinished, setFinished] = useState(false); 
+  const [isOnBreak, setIsOnBreak] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -35,21 +37,31 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   function resetCountdown() {
     clearTimeout(countdownTimeout);
     setActive(false);
+    setIsOnBreak(false);
     setFinished(false);
     setTime(0.1 * 60);
   }
 
   useEffect(() => {
+    function startBreak() {
+      setIsOnBreak(true);
+      setTime(0.1 * 50);
+      setActive(true);
+    }
+    
     if (isActive && time > 0) {
       countdownTimeout = setTimeout(() => {
         setTime(time - 1)
       }, 1000)
-    }  else if (isActive && time === 0) {
+    }  else if (isActive && time === 0 && !isOnBreak) {
       setFinished(true);
       setActive(false);
       completeIteration();
+      startBreak();
+    } else if (isActive && time === 0 && isOnBreak) {
+      resetCountdown();
     }
-  }, [isActive, time, completeIteration])
+  }, [isActive, isOnBreak, time, completeIteration])
 
   return(
     <CountdownContext.Provider value={{
@@ -57,6 +69,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       seconds,
       hasFinished, 
       isActive,
+      isOnBreak,
       startCountdown,
       resetCountdown,
     }}>
