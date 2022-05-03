@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import { Countdown } from '../components/Countdown';
 import { PlayerProfile } from '../components/PlayerProfile';
+import { Header } from '../components/Header';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { PlayerProvider } from '../contexts/PlayerContext';
 
@@ -19,9 +20,9 @@ export default function Home(props: HomeProps) {
         <title>Gameodoro</title>
       </Head>
       <div className={styles.container}>
-        <header className={styles.header}>
-          <h1>Gameodoro</h1>
-        </header>
+        <div className={styles.header}>
+          <Header />
+        </div>
         
         <div className={styles.conteudo1}>
           <PlayerProvider
