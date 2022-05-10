@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-msedge",
+            "name": "https://github.com/andynadvorny/gameodoro.git commit",
+            "request": "launch",
+            "url": "https://github.com/andynadvorny/gameodoro.git commit"
+        }
+    ]
+}

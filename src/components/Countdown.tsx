@@ -8,6 +8,7 @@ import breakButton from '../assets/images/break.svg';
 
 import styles from '../styles/Countdown.module.scss';
 
+
 export function Countdown() {
   const { 
     minutes, 
@@ -20,7 +21,6 @@ export function Countdown() {
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
-  
   return (
     <div className={styles.countdownWrapper}>
       <div className={`${styles.countdown} ${isOnBreak ? styles.isOnBreak : ''}`}>
