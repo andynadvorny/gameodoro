@@ -1,0 +1,14 @@
+.header{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    padding: 0 1rem;
+
+    #title{
+        font-size: 20px;
+    }
+    #button{
+        cursor: pointer;
+    }
+}

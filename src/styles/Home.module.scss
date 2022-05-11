@@ -10,6 +10,7 @@
   .header {
     grid-area: header;
     position: relative;
+    height: 100%;
   }
   
   .header::after{

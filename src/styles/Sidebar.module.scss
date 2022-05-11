@@ -1,0 +1,24 @@
+.sidebar{
+  background-color: var(--background);
+  width: 550px;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-row-gap: 2rem;
+  padding: 1.5rem 1rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+  transition: 400ms;
+  z-index: 10;
+
+  #button{
+    cursor: pointer;
+    justify-self: start;
+  }
+}
+
+.sidebaropen{
+  transform: translateX(0%);
+}
