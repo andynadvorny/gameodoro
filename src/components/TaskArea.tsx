@@ -21,14 +21,15 @@ export function TaskArea() {
     iterationsCompleted: 0,
   }
   
-  function handleAddTask(event: FormEvent) {
-    event.preventDefault();
-    setTasklist([...taskList, newTask]);
-  }
-  
   function handleIteractionSelection(event: React.ChangeEvent<HTMLSelectElement>) {
     const value = event.target.value;
     setNewTaskIteractions(Number(value));
+  }
+
+  function handleAddTask(event: FormEvent) {
+    event.preventDefault();
+    setTasklist([...taskList, newTask]);
+    setNewTaskName('');
   }
 
   return (
@@ -50,6 +51,7 @@ export function TaskArea() {
         <input 
           className={styles.input}
           type="text"
+          value={newTaskName}
           onChange={event => {setNewTaskName(event.target.value)}}
         />
         <div className={styles.select}>
@@ -66,7 +68,10 @@ export function TaskArea() {
             <option value={6}>6</option>
           </select>
         </div>
-        <button type="submit">
+        <button 
+          type="submit"
+          disabled={!newTaskName}
+        >
           Adicionar tarefa
           <Image src={plusIcon} alt='botão de adicionar tarefa' />
         </button>
