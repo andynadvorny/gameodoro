@@ -1,0 +1,61 @@
+.conteudo2 {
+  grid-area: conteudo2;
+  padding: 20px 20px;    
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  
+  h2 {
+    text-align: center;
+    font-size: 36px;
+    border-bottom: 1px solid var(--accent);
+    margin: 20px auto;
+    width: 100%;
+  }
+  
+  &::after{
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 10%;
+    height: 80%;
+    border-left: 1px solid var(--accent);
+  }
+
+  .form {
+    margin-top: auto;
+    margin-bottom: 100px;
+  }
+
+  .input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 8px;
+  }
+
+  .select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+    
+    background-color: var(--background);
+    color: var(--accent);
+    border-radius: 5px;
+    border: 1px solid var(--accent);
+    font-size: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
