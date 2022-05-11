@@ -1,17 +1,17 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useContext } from 'react';
 import Image from 'next/image';
 import { Task } from '../components/Task';
+import { TaskListContext } from '../contexts/TaskListContext';
 
 import plusIcon from '../assets/images/plus.svg'
 import styles from '../styles/TaskArea.module.scss';
 
 export function TaskArea() {
-  const [taskList, setTasklist] = useState([
-    { title: 'tarefa 1', iterationsTotal: 3, iterationsCompleted: 3},
-    { title: 'tarefa 2', iterationsTotal: 1, iterationsCompleted: 0},
-    { title: 'tarefa 3', iterationsTotal: 2, iterationsCompleted: 1},
-  ])
-
+  const { 
+    taskList,
+    addNewTask
+  } = useContext(TaskListContext);
+  
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskIteractions, setNewTaskIteractions] = useState(1);
   
@@ -28,7 +28,7 @@ export function TaskArea() {
 
   function handleAddTask(event: FormEvent) {
     event.preventDefault();
-    setTasklist([...taskList, newTask]);
+    addNewTask(newTask);
     setNewTaskName('');
   }
 

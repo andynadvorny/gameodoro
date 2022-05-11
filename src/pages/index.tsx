@@ -8,6 +8,7 @@ import { TaskArea } from '../components/TaskArea';
 
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { PlayerProvider } from '../contexts/PlayerContext';
+import { TaskListProvider } from '../contexts/TaskListContext';
 
 import styles from '../styles/Home.module.scss';
 
@@ -37,8 +38,9 @@ interface HomeProps {
             <PlayerProfile />
           </PlayerProvider>
         </div>
-
-        <TaskArea />
+        <TaskListProvider>
+          <TaskArea />
+        </TaskListProvider>
       </div>
     </>
   )
