@@ -20,7 +20,7 @@ export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
     Notification.requestPermission();
   }, [])
 
-  useEffect(() => setIterationsCompleted(rest.iterationsCompleted ?? 0), [])
+  useEffect(() => setIterationsCompleted(rest.iterationsCompleted ?? 0), [rest.iterationsCompleted])
 
   useEffect(() => {
     Cookies.set('iterationsCompleted', String(iterationsCompleted));

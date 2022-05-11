@@ -20,7 +20,7 @@ export const CountdownContext = createContext({} as CountdownContextData)
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const { completeIteration } = useContext(PlayerContext);
+  const { iterationsCompleted, completeIteration } = useContext(PlayerContext);
 
   const [time, setTime] = useState(0.1 * 60);
   const [isActive, setActive] = useState(false);
@@ -45,7 +45,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   useEffect(() => {
     function startBreak() {
       setIsOnBreak(true);
-      setTime(0.1 * 50);
+      if (iterationsCompleted != 0 && (iterationsCompleted + 1) % 4 == 0) {
+        setTime(0.1 * 70);
+      } else {
+        setTime(0.1 * 50);
+      }
       setActive(true);
     }
     
@@ -61,7 +65,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     } else if (isActive && time === 0 && isOnBreak) {
       resetCountdown();
     }
-  }, [isActive, isOnBreak, time, completeIteration])
+  }, [isActive, isOnBreak, time, iterationsCompleted, completeIteration])
 
   return(
     <CountdownContext.Provider value={{
