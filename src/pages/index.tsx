@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 import { Countdown } from '../components/Countdown';
 import { PlayerProfile } from '../components/PlayerProfile';
 import { TaskArea } from '../components/TaskArea';
-
+import { LoginProvider } from '../contexts/LoginContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { PlayerProvider } from '../contexts/PlayerContext';
 import { TaskListProvider } from '../contexts/TaskListContext';
@@ -19,7 +19,7 @@ interface HomeProps {
 
   export default function Home(props: HomeProps) {
   return (
-    <>
+    <LoginProvider>
       <Head>
         <title>Gameodoro</title>
       </Head>
@@ -42,7 +42,7 @@ interface HomeProps {
           <TaskArea />
         </TaskListProvider>
       </div>
-    </>
+    </LoginProvider>
   )
 }
 

@@ -2,9 +2,9 @@
   background-color: var(--background);
   width: 550px;
   height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-row-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 1.5rem 1rem;
   position: fixed;
   top: 0;
@@ -16,6 +16,19 @@
   #button{
     cursor: pointer;
     justify-self: start;
+  }
+
+  .userProfile {
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      border-radius: 50%;
+    }
+  }
+
+  button {
+    height: 20px;
   }
 }
 
