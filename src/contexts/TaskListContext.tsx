@@ -22,11 +22,16 @@ export function TaskListProvider({ children }: TaskListProps) {
   const [taskList, setTasklist] = useState<Task[]>([])
 
   useEffect(() => {
-    const storageList = JSON.parse(localStorage.getItem('taskList') || "");
+    try {
+      const storageList = JSON.parse(localStorage.getItem('taskList') || "");
     
-    if (storageList.length > 0) {
-      setTasklist(storageList);
+      if (storageList != "") {
+        setTasklist(storageList);
+      }
+    } catch (error) {
+      console.log(error);
     }
+    
   }, [])
 
   useEffect(() => {
