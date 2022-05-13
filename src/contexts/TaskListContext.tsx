@@ -1,6 +1,7 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
 
 interface Task {
+  index: number;
   title: string;
   iterationsTotal: number;
   iterationsCompleted: number;
@@ -9,7 +10,9 @@ interface Task {
 
 interface TaskListData {
   taskList: Task[];
+  currentTaskIndex: number;
   addNewTask: (newTask: Task) => void;
+  setCurrentTask: (index: number) => void;
 }
 
 interface TaskListProps {
@@ -19,7 +22,8 @@ interface TaskListProps {
 export const TaskListContext = createContext({} as TaskListData);
 
 export function TaskListProvider({ children }: TaskListProps) {
-  const [taskList, setTasklist] = useState<Task[]>([])
+  const [taskList, setTasklist] = useState<Task[]>([]);
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 
   useEffect(() => {
     try {
@@ -31,7 +35,6 @@ export function TaskListProvider({ children }: TaskListProps) {
     } catch (error) {
       console.log(error);
     }
-    
   }, [])
 
   useEffect(() => {
@@ -42,10 +45,16 @@ export function TaskListProvider({ children }: TaskListProps) {
     setTasklist([...taskList, newTask]);
   }
 
+  function setCurrentTask(index: number) {
+    setCurrentTaskIndex(index)
+  }
+
   return(
     <TaskListContext.Provider value={{ 
       taskList,
-      addNewTask
+      currentTaskIndex,
+      addNewTask,
+      setCurrentTask
     }}>
       {children}
     </TaskListContext.Provider>

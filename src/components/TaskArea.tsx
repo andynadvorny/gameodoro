@@ -9,13 +9,15 @@ import styles from '../styles/TaskArea.module.scss';
 export function TaskArea() {
   const { 
     taskList,
-    addNewTask
+    addNewTask,
+    setCurrentTask
   } = useContext(TaskListContext);
   
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskIteractions, setNewTaskIteractions] = useState(1);
   
   const newTask = {
+    index: taskList.length,
     title: newTaskName,
     iterationsTotal: newTaskIteractions,
     iterationsCompleted: 0,
@@ -32,6 +34,10 @@ export function TaskArea() {
     setNewTaskName('');
   }
 
+  function handleSetCurrentTask(index: number) {
+    setCurrentTask(index)
+  }
+
   return (
     <div className={styles.conteudo2}>
       <h2>Tarefas</h2>
@@ -40,9 +46,11 @@ export function TaskArea() {
           return (
             <Task 
               key={index}
+              index={task.index}
               title={task.title}
               iterationsTotal={task.iterationsTotal}
               iterationsCompleted={task.iterationsCompleted}
+              onTaskClick={() => handleSetCurrentTask(task.index)}
             />
           )
         })}
