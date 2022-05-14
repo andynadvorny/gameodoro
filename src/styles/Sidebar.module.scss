@@ -1,5 +1,5 @@
 .sidebar{
-  background-color: var(--background);
+  background-color: var(--alternateBackground);
   width: 550px;
   height: 100vh;
   display: flex;
@@ -12,6 +12,7 @@
   transform: translateX(100%);
   transition: 400ms;
   z-index: 10;
+  border-left: 2px solid var(--accent);
 
   #button{
     cursor: pointer;
@@ -34,4 +35,55 @@
 
 .sidebaropen{
   transform: translateX(0%);
+}
+
+.contents{
+  display: grid;
+  row-gap: 20px;
+  padding: 30px 0;
+
+  .userProfile{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+
+    p{
+      font-size: 25px;
+    }
+  }
+  
+  button {
+    justify-self: center;
+    border: none;
+    width: 200px;
+    height: 40px;
+    background: var(--background);
+    color: var(--accent);
+    border-radius: 15px;
+    text-transform: uppercase;
+    z-index: 1;
+    position: relative;
+    transition: all 250ms;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      border-radius: 15px;
+      background-color: var(--accent);
+      z-index: -1;
+      transition: all 250ms
+     }
+     
+     &:hover {
+      color: var(--background);
+      &:before {
+        width: 100%;
+       }
+     }
+   }
 }

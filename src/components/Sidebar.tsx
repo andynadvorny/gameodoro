@@ -12,18 +12,20 @@ export function Sidebar(props: any) {
     <div className={props.sidebar ? `${styles.sidebar} ${styles.sidebaropen}` : `${styles.sidebar}`}>
 
       <div id={styles.button} onClick={props.showSidebar}><Image src={closeButton} alt='botão fechar'/></div>
-      { user ? (
-        <>
-          <div className={styles.userProfile}>
-            <Image src={user.avatar} alt="user profile pic" className={styles.avatar} width="50px" height="50px" />
-            <span>{user.name}</span>
-          </div>
-          <button type='button' onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <button type='button' onClick={login}>Login</button>
-      )}
-      <div id={styles.conteudo}>conteudo</div>
+
+      <div className={styles.contents}>
+        { user ? (
+          <>
+            <div className={styles.userProfile}>
+              <Image src={user.avatar} alt="user profile pic" className={styles.avatar} width="50px" height="50px" />
+              <p><span>{user.name}</span></p>
+            </div>
+            <button type='button' onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <button type='button' onClick={login}>Login</button>
+        )}
+      </div>
     </div>
 
   )
