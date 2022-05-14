@@ -20,9 +20,7 @@ export function Task({
   isCompleted = iterationsCompleted==iterationsTotal,
   onTaskClick
 }: TaskProps) {
-  const { 
-    currentTaskIndex
-  } = useContext(TaskListContext);
+  const { currentTaskIndex } = useContext(TaskListContext);
 
   return (
     <div 

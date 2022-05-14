@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState, useContext } from 'react';
 import { PlayerContext } from './PlayerContext';
+import { TaskListContext } from './TaskListContext';
 
 interface CountdownContextData {
   minutes: number;
@@ -21,6 +22,7 @@ let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
   const { iterationsCompleted, completeIteration } = useContext(PlayerContext);
+  const { addTaskIteration } = useContext(TaskListContext);
 
   const [time, setTime] = useState(0.1 * 60);
   const [isActive, setActive] = useState(false);
@@ -61,11 +63,12 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       setFinished(true);
       setActive(false);
       completeIteration();
+      addTaskIteration();
       startBreak();
     } else if (isActive && time === 0 && isOnBreak) {
       resetCountdown();
     }
-  }, [isActive, isOnBreak, time, iterationsCompleted, completeIteration])
+  }, [isActive, isOnBreak, time, iterationsCompleted, completeIteration, addTaskIteration])
 
   return(
     <CountdownContext.Provider value={{

@@ -27,18 +27,17 @@ interface HomeProps {
         <div className={styles.header}>
           <Header />
         </div>
-        
-        <div className={styles.conteudo1}>
-          <PlayerProvider
-            iterationsCompleted={props.iterationsCompleted}
-          >
-            <CountdownProvider>
-              <Countdown />
-            </CountdownProvider>
-            <PlayerProfile />
-          </PlayerProvider>
-        </div>
         <TaskListProvider>
+          <div className={styles.conteudo1}>
+            <PlayerProvider
+              iterationsCompleted={props.iterationsCompleted}
+            >
+              <CountdownProvider>
+                <Countdown />
+              </CountdownProvider>
+              <PlayerProfile />
+            </PlayerProvider>
+          </div>
           <TaskArea />
         </TaskListProvider>
       </div>
