@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { Task } from '../components/Task';
 import { TaskListContext } from '../contexts/TaskListContext';
 
-import plusIcon from '../assets/images/plus.svg'
+import plusIcon from '../assets/images/plus.svg';
+import noTasks from '../assets/images/clipboard.svg';
 import styles from '../styles/TaskArea.module.scss';
-import noTasks from '../assets/images/close.svg';
 
 export function TaskArea() {
   const { 
@@ -60,9 +60,9 @@ export function TaskArea() {
             )
             
           }) : 
-          <div className="noTasks">
-            <h3>Voce ainda nao tem nenhuma tarefa cadastrada.</h3>
-           
+          <div className={styles.noTasks}>
+            <Image src={noTasks} alt="x symbol"></Image>
+            <h3>Voce ainda nao tem nenhuma tarefa cadastrada <br />Adicione uma tarefa para começar</h3>
           </div>
         }
       </>
