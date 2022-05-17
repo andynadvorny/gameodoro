@@ -59,9 +59,10 @@ export function TaskListProvider({ children, ...rest }: TaskListProps) {
 
   function addTaskIteration() {
     if (currentTask.iterationsCompleted < currentTask.iterationsTotal) {
-      currentTask.iterationsCompleted += 1;
-      localStorage.setItem('taskList', JSON.stringify(taskList));
-      setTasklist(JSON.parse(localStorage.getItem('taskList') || ""))
+      const updatedTaskList = [...taskList]
+      updatedTaskList[currentTaskIndex].iterationsCompleted += 1;
+      setTasklist(updatedTaskList);
+      localStorage.setItem('taskList', JSON.stringify(updatedTaskList))
     }
   }
 
