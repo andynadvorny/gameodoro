@@ -5,6 +5,7 @@ import { TaskListContext } from '../contexts/TaskListContext';
 
 import plusIcon from '../assets/images/plus.svg'
 import styles from '../styles/TaskArea.module.scss';
+import noTasks from '../assets/images/close.svg';
 
 export function TaskArea() {
   const { 
@@ -41,19 +42,29 @@ export function TaskArea() {
   return (
     <div className={styles.conteudo2}>
       <h2>Tarefas</h2>
+
       <>
-        {taskList.map((task, index) => {
-          return (
-            <Task 
-              key={index}
-              index={task.index}
-              title={task.title}
-              iterationsTotal={task.iterationsTotal}
-              iterationsCompleted={task.iterationsCompleted}
-              onTaskClick={() => handleSetCurrentTask(task.index)}
-            />
-          )
-        })}
+        
+        {
+          taskList.length > 0 ? taskList.map((task, index) => {
+            return (
+              <Task 
+                key={index}
+                index={task.index}
+                title={task.title}
+                iterationsTotal={task.iterationsTotal}
+                iterationsCompleted={task.iterationsCompleted}
+                onTaskClick={() => handleSetCurrentTask(task.index)}
+              />
+              
+            )
+            
+          }) : 
+          <div className="noTasks">
+            <h3>Voce ainda nao tem nenhuma tarefa cadastrada.</h3>
+           
+          </div>
+        }
       </>
       <form onSubmit={handleAddTask} className={styles.form}>
         <input 
