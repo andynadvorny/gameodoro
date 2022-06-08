@@ -1,5 +1,9 @@
 import { useContext } from 'react';
 import { TaskListContext } from '../contexts/TaskListContext';
+import Image from 'next/image';
+
+import pauseIcon from "../assets/images/pause.svg";
+import playIcon from "../assets/images/play-list.svg";
 
 import styles from '../styles/Task.module.scss';
 
@@ -28,11 +32,9 @@ export function Task({
       onClick={onTaskClick}
     >
       <div className={styles.left}>
-        <input 
-          type="checkbox" 
-          checked={isCompleted}
-          onChange={() => {}}
-        />
+      
+        <Image src={index == currentTaskIndex ? playIcon : pauseIcon}  className="icone-lista" alt="icone lista" width={18} height={18}></Image>
+        
         <label>{title}</label>
       </div>
       {iterationsCompleted}/{iterationsTotal}
