@@ -68,7 +68,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     } else if (isActive && time === 0 && isOnBreak) {
       resetCountdown();
     }
-  }, [isActive, isOnBreak, time, iterationsCompleted, completeIteration, addTaskIteration])
+  }, [isActive, isOnBreak, time])
 
   return(
     <CountdownContext.Provider value={{
