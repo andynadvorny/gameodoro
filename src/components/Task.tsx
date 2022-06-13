@@ -33,7 +33,15 @@ export function Task({
     >
       <div className={styles.left}>
       
-        <Image src={index == currentTaskIndex ? playIcon : pauseIcon}  className="icone-lista" alt="icone lista" width={18} height={18}></Image>
+        {isCompleted ? (
+          <input 
+            type="checkbox" 
+            checked={isCompleted}
+            onChange={() => {}}
+          />
+        ) : (
+          <Image src={index == currentTaskIndex ? playIcon : pauseIcon}  className="icone-lista" alt="icone lista" width={18} height={18} />
+        )}
         
         <label>{title}</label>
       </div>
