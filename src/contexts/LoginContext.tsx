@@ -1,5 +1,6 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import { auth } from '../services/firebase';
+import { auth, database } from '../services/firebase';
+import { onValue, ref, set } from 'firebase/database';
 import { 
   GoogleAuthProvider, 
   signInWithPopup, 
@@ -32,6 +33,7 @@ export function LoginProvider({ children } : LoginProviderProps) {
     const unsubscribe = onAuthStateChanged( auth, (currentUser) => {
       if (currentUser) {
         const { uid, displayName, photoURL } = currentUser
+        const userRef = ref(database, 'users/' + uid)
 
         if (!displayName || !photoURL) {
           throw new Error('Missing information from Google Account.')
@@ -42,6 +44,18 @@ export function LoginProvider({ children } : LoginProviderProps) {
           name: displayName,
           avatar: photoURL
         })
+
+        onValue(userRef, (snapshot) => {
+          const data = snapshot.val()
+          if (data == null) {
+            set(userRef, {
+              name: displayName,
+              avatar: photoURL,
+              iterationsCompleted: 0,
+            })
+          }
+        })
+
       }
 
       return () => {

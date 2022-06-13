@@ -1,5 +1,7 @@
-import { createContext, useState, ReactNode, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { ref, update, onValue } from 'firebase/database';
+import { database } from '../services/firebase';
+import { LoginContext } from './LoginContext';
 
 interface PlayerContextData {
   iterationsCompleted: number;
@@ -8,23 +10,26 @@ interface PlayerContextData {
 
 interface PlayerProviderProps {
   children: ReactNode;
-  iterationsCompleted: number;
 }
 
 export const PlayerContext = createContext({} as PlayerContextData);
 
-export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
+export function PlayerProvider({ children }: PlayerProviderProps) {
+  const { user } = useContext(LoginContext);
+  const userRef = ref(database, 'users/' + user?.id)
   const [iterationsCompleted, setIterationsCompleted] = useState(0);
 
   useEffect(() => {
     Notification.requestPermission();
   }, [])
 
-  useEffect(() => setIterationsCompleted(rest.iterationsCompleted ?? 0), [rest.iterationsCompleted])
-
   useEffect(() => {
-    Cookies.set('iterationsCompleted', String(iterationsCompleted));
-  }, [iterationsCompleted])
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val()
+      const databaseIterations = data?.iterationsCompleted || 0
+      setIterationsCompleted(databaseIterations)
+    })
+  }, [userRef])
 
   function completeIteration() {
     setIterationsCompleted(iterationsCompleted + 1);
@@ -36,6 +41,10 @@ export function PlayerProvider({ children, ...rest }: PlayerProviderProps) {
         body: `Você ja completou ${iterationsCompleted + 1} ciclos!` 
       })
     }
+
+    update(ref(database, 'users/' + user?.id), {
+      iterationsCompleted: iterationsCompleted + 1
+    });
   }
 
   return(
