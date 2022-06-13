@@ -25,27 +25,33 @@ export function Task({
   onTaskClick
 }: TaskProps) {
   const { currentTaskIndex } = useContext(TaskListContext);
+  const percentageToCompletion = (iterationsCompleted * 100)/iterationsTotal;
 
   return (
-    <div 
-      className={index == currentTaskIndex ? `${styles.container} ${styles.currentTask}` : `${styles.container}`}
-      onClick={onTaskClick}
-    >
-      <div className={styles.left}>
-      
-        {isCompleted ? (
-          <input 
-            type="checkbox" 
-            checked={isCompleted}
-            onChange={() => {}}
-          />
-        ) : (
-          <Image src={index == currentTaskIndex ? playIcon : pauseIcon}  className="icone-lista" alt="icone lista" width={18} height={18} />
-        )}
-        
-        <label>{title}</label>
+    <>
+      <div className={styles.progressBar}>
+        <div style={{ width: `${percentageToCompletion}%` }} />
       </div>
-      {iterationsCompleted}/{iterationsTotal}
-    </div>
+      <div 
+        className={index == currentTaskIndex ? `${styles.container} ${styles.currentTask}` : `${styles.container}`}
+        onClick={onTaskClick}
+      >
+        <div className={styles.left}>
+        
+          {isCompleted ? (
+            <input 
+              type="checkbox" 
+              checked={isCompleted}
+              onChange={() => {}}
+            />
+          ) : (
+            <Image src={index == currentTaskIndex ? playIcon : pauseIcon}  className="icone-lista" alt="icone lista" width={18} height={18} />
+          )}
+          
+          <label>{title}</label>
+        </div>
+        {iterationsCompleted}/{iterationsTotal}
+      </div>
+    </>
   )
 }

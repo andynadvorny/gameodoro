@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
+  margin-bottom: 16px;
 
   font-size: 28px;
   accent-color: var(--accent);
@@ -21,4 +22,18 @@
 
 .currentTask {
   color: var(--green);
+}
+
+.progressBar {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--alternateBackground);
+  position: relative;
+
+
+  div {
+    height: 4px;
+    border-radius: 4px;
+    background: var(--green);
+  } 
 }
