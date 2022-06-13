@@ -1,4 +1,7 @@
-import { createContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { ref, update, onValue } from 'firebase/database';
+import { database } from '../services/firebase';
+import { LoginContext } from './LoginContext';
 
 interface Task {
   index: number;
@@ -24,6 +27,8 @@ interface TaskListProps {
 export const TaskListContext = createContext({} as TaskListData);
 
 export function TaskListProvider({ children, ...rest }: TaskListProps) {
+  const { user } = useContext(LoginContext);
+  const userRef = ref(database, 'users/' + user?.id)
   const [taskList, setTasklist] = useState<Task[]>([]);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   
@@ -32,27 +37,23 @@ export function TaskListProvider({ children, ...rest }: TaskListProps) {
   useEffect(() => setCurrentTaskIndex(rest.currentTaskIndex ?? 0), [rest.currentTaskIndex]);
 
   useEffect(() => {
-    try {
-      const storageList = JSON.parse(localStorage.getItem('taskList') || "");
-    
-      if (storageList != "") {
-        setTasklist(storageList);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('taskList', JSON.stringify(taskList))
-  }, [taskList])
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val()
+      const databaseTasks = data?.tasks || []
+      setTasklist(databaseTasks,)
+    })
+  }, [userRef])
 
   function addNewTask(newTask: Task) {
     setTasklist([...taskList, newTask]);
+
+    update(ref(database, 'users/' + user?.id), {
+      tasks: [...taskList, newTask]
+    });
   }
 
   function setCurrentTask(index: number) {
-    if (taskList[index].iterationsCompleted < taskList[currentTaskIndex].iterationsTotal) {
+    if (taskList[index].iterationsCompleted < taskList[index].iterationsTotal) {
       setCurrentTaskIndex(index)
     }
   }
@@ -62,7 +63,10 @@ export function TaskListProvider({ children, ...rest }: TaskListProps) {
       const updatedTaskList = [...taskList]
       updatedTaskList[currentTaskIndex].iterationsCompleted += 1;
       setTasklist(updatedTaskList);
-      localStorage.setItem('taskList', JSON.stringify(updatedTaskList))
+      
+      update(ref(database, 'users/' + user?.id), {
+        tasks: updatedTaskList
+      });
     }
   }
 
