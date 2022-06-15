@@ -5,7 +5,7 @@ import styles from '../styles/ExperienceBar.module.scss'
 
 export function ExperienceBar() {
   const { experience, experienceToNextLevel } = useContext(PlayerContext);
-  const percentToNextLevel = Math.round((experience * 100) / experienceToNextLevel);
+  const percentToNextLevel = Math.round((experience * 100) / (experienceToNextLevel - experience));
 
   return (
     <div className={styles.experienceBar}>
@@ -16,7 +16,7 @@ export function ExperienceBar() {
           {experience} xp
         </span>
       </div>
-      <span>{experienceToNextLevel} xp</span>
+      <span>{experienceToNextLevel - experience} xp</span>
     </div>
   )
 }
