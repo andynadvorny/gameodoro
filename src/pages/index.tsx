@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
 import { Header } from '../components/Header';
@@ -20,37 +19,25 @@ interface HomeProps {
   export default function Home(props: HomeProps) {
   return (
     <LoginProvider>
-      <Head>
-        <title>Gameodoro</title>
-      </Head>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <Header />
-        </div>
-        <TaskListProvider>
-          <div className={styles.conteudo1}>
-            <PlayerProvider
-              iterationsCompleted={props.iterationsCompleted}
-            >
+      <PlayerProvider>
+        <Head>
+          <title>Gameodoro</title>
+        </Head>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <Header />
+          </div>
+          <TaskListProvider>
+            <div className={styles.conteudo1}>
               <CountdownProvider>
                 <Countdown />
               </CountdownProvider>
               <PlayerProfile />
-            </PlayerProvider>
-          </div>
-          <TaskArea />
-        </TaskListProvider>
-      </div>
+            </div>
+            <TaskArea />
+          </TaskListProvider>
+        </div>
+      </PlayerProvider>
     </LoginProvider>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { iterationsCompleted } = context.req.cookies;
-
-  return {
-    props: {
-      iterationsCompleted: Number(iterationsCompleted)
-    }
-  }
 }

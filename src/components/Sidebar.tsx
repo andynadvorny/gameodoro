@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { LoginContext } from '../contexts/LoginContext';
 import Image from 'next/image';
+import { ExperienceBar } from '../components/ExperienceBar';
 
 import styles from '../styles/Sidebar.module.scss';
 import closeButton from '../assets/images/close.svg';
@@ -19,6 +20,7 @@ export function Sidebar(props: any) {
             <div className={styles.userProfile}>
               <Image src={user.avatar} alt="user profile pic" className={styles.avatar} width="50px" height="50px" />
               <p><span>{user.name}</span></p>
+              <ExperienceBar />
             </div>
             <button type='button' onClick={logout}>Logout</button>
           </>

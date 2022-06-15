@@ -52,6 +52,9 @@ export function LoginProvider({ children } : LoginProviderProps) {
               name: displayName,
               avatar: photoURL,
               iterationsCompleted: 0,
+              level: 1,
+              experience: 0,
+              experienceToNextLevel: 80
             })
           }
         })

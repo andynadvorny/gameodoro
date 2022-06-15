@@ -1,18 +1,15 @@
 import { useContext } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
 
-export function PlayerProfile() {
-  const { iterationsCompleted, level, experience, experienceToNextLevel } = useContext(PlayerContext);
+import styles from '../styles/PlayerProfile.module.scss';
 
-  console.log(`level: ${level}`)
-  console.log(`experience: ${experience}`)
-  console.log(`to next: ${experienceToNextLevel}`)
+export function PlayerProfile() {
+  const { iterationsCompleted, level } = useContext(PlayerContext);
 
   return (
-    <>
-      Ciclos completos: {iterationsCompleted}
-      <br />
-      Level: {level}
-    </>
+    <div className={styles.playerProfileWrapper}>
+      <div>Ciclos completos: {iterationsCompleted}</div>
+      <div>Level: {level}</div>
+    </div>
   )
 }

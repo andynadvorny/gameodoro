@@ -34,56 +34,75 @@ export function PlayerProvider({ children }: PlayerProviderProps) {
     onValue(userRef, (snapshot) => {
       const data = snapshot.val()
       const databaseIterations = data?.iterationsCompleted || 0
+      const databaseLevel = data?.level || 1
+      const databaseExperience = data?.experience || 0
+      const databaseExperienceToNextLevel = data?.experienceToNextLevel || 80
       setIterationsCompleted(databaseIterations)
+      setLevel(databaseLevel)
+      setExperience(databaseExperience)
+      setExperienceToNextLevel(databaseExperienceToNextLevel)
     })
   }, [userRef])
 
-  useEffect(() => {
-    try {
-      const level = Number(localStorage.getItem('level')) || 1;
-      const experience = Number(localStorage.getItem('experience')) || 0;
-      const experienceToNextLevel = Number(localStorage.getItem('experienceToNextLevel')) || 80;
-    
-      if (level !== 1 || experience !== 0 || experienceToNextLevel !== 80) {
-        setLevel(level);
-        setExperience(experience);
-        setExperienceToNextLevel(experienceToNextLevel);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('level', JSON.stringify(level))
-    localStorage.setItem('experience', JSON.stringify(experience))
-    localStorage.setItem('experienceToNextLevel', JSON.stringify(experienceToNextLevel))
-  }, [level, experience, experienceToNextLevel])
-
   function completeIteration() {
+    const xp = Math.random() * (90 - 50) + 50;
+    const totalExperience = experience + Math.ceil(xp);
+
+    setExperience(totalExperience)
     setIterationsCompleted(iterationsCompleted + 1);
 
-    new Audio('/notification.mp3').play();
+    if(totalExperience >= experienceToNextLevel){
+      setLevel(level + 1)
+      setExperienceToNextLevel(Math.ceil(experienceToNextLevel * 2.4))
 
-    if (Notification.permission === 'granted') {
-      new Notification('New challenge 🎉', {
-        body: `Você ja completou ${iterationsCompleted + 1} ciclos!` 
-      })
+      new Audio('/notification.mp3').play();
+
+      if (Notification.permission === 'granted') {
+        new Notification('Level Up 🔝✨', {
+          body: `Você chegou no level ${level + 1}` 
+        })
+      }
+
+      update(ref(database, 'users/' + user?.id), {
+        level: level + 1,
+        experienceToNextLevel: Math.ceil(experienceToNextLevel * 2.4),
+        iterationsCompleted: iterationsCompleted + 1,
+        experience: totalExperience
+      });
+    } else {
+      new Audio('/notification.mp3').play();
+
+      if (Notification.permission === 'granted') {
+        new Notification('New challenge 🎉', {
+          body: `Você ja completou ${iterationsCompleted + 1} ciclos!` 
+        })
+      }
+
+      update(ref(database, 'users/' + user?.id), {
+        iterationsCompleted: iterationsCompleted + 1,
+        experience: totalExperience
+      });
     }
-
-    update(ref(database, 'users/' + user?.id), {
-      iterationsCompleted: iterationsCompleted + 1
-    });
   }
 
   function levelUp(){
     const xp = Math.random() * (90 - 50) + 50;
     const totalExperience = experience + Math.ceil(xp);
+    
     if(totalExperience >= experienceToNextLevel){
       setLevel(level + 1)
-      setExperienceToNextLevel(Math.ceil(experienceToNextLevel * 2.4));
+      setExperienceToNextLevel(Math.ceil(experienceToNextLevel * 2.4))
+
+      update(ref(database, 'users/' + user?.id), {
+        level: level + 1,
+        experienceToNextLevel: Math.ceil(experienceToNextLevel * 2.4)
+      });
     }
     setExperience(totalExperience)
+
+    update(ref(database, 'users/' + user?.id), {
+      experience: totalExperience
+    });
   }
 
   return(
