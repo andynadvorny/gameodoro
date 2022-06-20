@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { ref, update, onValue } from 'firebase/database';
+import { ref, get, child, update, onValue } from 'firebase/database';
 import { database } from '../services/firebase';
 import { LoginContext } from './LoginContext';
 
@@ -8,8 +8,27 @@ interface PlayerContextData {
   level: number;
   experience: number;
   experienceToNextLevel: number;
+  playersRank: PlayerRankData[];
   completeIteration: () => void;
   levelUp: () => void;
+}
+
+type FirebaseUsers = Record<string, {
+  name: string,
+  avatar: string
+  experience: number,
+  experienceToNextLevel: number,
+  iterationsCompleted: number,
+  level: number,
+  tasks: any
+}>
+
+
+interface PlayerRankData {
+  id: string,
+  name: string,
+  level: number,
+  totalIterations: number
 }
 
 interface PlayerProviderProps {
@@ -20,14 +39,31 @@ export const PlayerContext = createContext({} as PlayerContextData);
 
 export function PlayerProvider({ children }: PlayerProviderProps) {
   const { user } = useContext(LoginContext);
-  const userRef = ref(database, 'users/' + user?.id)
+  const userRef = ref(database, 'users/' + user?.id);
+  const allUsersRef = ref(database);
   const [iterationsCompleted, setIterationsCompleted] = useState(0);
   const [level, setLevel] = useState(1);
   const [experience, setExperience] = useState(0);
   const [experienceToNextLevel, setExperienceToNextLevel] = useState(80);
+  const [playersRank, setPlayersRank] = useState<PlayerRankData[]>([]);
 
   useEffect(() => {
     Notification.requestPermission();
+  }, [])
+
+  useEffect(() => {
+    get(child(allUsersRef, 'users')).then((snapshot) => {
+      const firebaseUsers: FirebaseUsers = snapshot.val()
+      const parsedUsers = Object.entries(firebaseUsers).map(([key, value]) => {
+        return {
+          id: key,
+          name: value.name,
+          level: value.level,
+          totalIterations: value.iterationsCompleted 
+        }
+      })
+      setPlayersRank(parsedUsers)
+    })
   }, [])
 
   useEffect(() => {
@@ -111,6 +147,7 @@ export function PlayerProvider({ children }: PlayerProviderProps) {
       level,
       experience,
       experienceToNextLevel,
+      playersRank,
       completeIteration,
       levelUp,
     }}>
