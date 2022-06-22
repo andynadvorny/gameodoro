@@ -92,8 +92,10 @@ export function TaskArea() {
             <option value={6}>6</option>
           </select>
         </div>
-        Tempo de tarefa: 0{newTaskHours} :{newTaskMinutes == 0 ? '00' : newTaskMinutes}
-        
+        <div className={styles.select}>
+          <div>Tempo de tarefa:</div> 
+          <div>0{newTaskHours}:{newTaskMinutes == 0 ? '00' : newTaskMinutes}</div>
+        </div>
         <button   
           type="submit"
           disabled={!newTaskName}
