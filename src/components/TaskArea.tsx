@@ -24,6 +24,11 @@ export function TaskArea() {
     iterationsCompleted: 0,
   }
   
+  const newTaskTime = newTaskIteractions * 30
+  const newTaskHours = Math.floor(newTaskTime/60)
+  const newTaskMinutes = newTaskTime%60
+
+
   function handleIteractionSelection(event: React.ChangeEvent<HTMLSelectElement>) {
     const value = event.target.value;
     setNewTaskIteractions(Number(value));
@@ -87,7 +92,9 @@ export function TaskArea() {
             <option value={6}>6</option>
           </select>
         </div>
-        <button 
+        Tempo de tarefa: 0{newTaskHours} :{newTaskMinutes == 0 ? '00' : newTaskMinutes}
+        
+        <button   
           type="submit"
           disabled={!newTaskName}
         >
