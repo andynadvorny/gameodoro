@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import pauseIcon from "../assets/images/pause.svg";
 import playIcon from "../assets/images/play-list.svg";
+import trashIcon from "../assets/images/trash.svg";
 
 import styles from '../styles/Task.module.scss';
 
@@ -24,7 +25,7 @@ export function Task({
   isCompleted = iterationsCompleted==iterationsTotal,
   onTaskClick
 }: TaskProps) {
-  const { currentTaskIndex } = useContext(TaskListContext);
+  const { taskList, currentTaskIndex, deleteTask } = useContext(TaskListContext);
   const percentageToCompletion = (iterationsCompleted * 100)/iterationsTotal;
 
   return (
@@ -50,7 +51,10 @@ export function Task({
           
           <label>{title}</label>
         </div>
-        {iterationsCompleted}/{iterationsTotal}
+        <div className={styles.iterations}>
+          {iterationsCompleted}/{iterationsTotal}
+          <button onClick={() => deleteTask(index)}><Image src={trashIcon} /></button>
+        </div>
       </div>
     </>
   )

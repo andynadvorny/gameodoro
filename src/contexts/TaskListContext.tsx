@@ -17,6 +17,7 @@ interface TaskListData {
   addNewTask: (newTask: Task) => void;
   setCurrentTask: (index: number) => void;
   addTaskIteration: () => void;
+  deleteTask: (index: number) => void;
 }
 
 interface TaskListProps {
@@ -53,7 +54,7 @@ export function TaskListProvider({ children, ...rest }: TaskListProps) {
   }
 
   function setCurrentTask(index: number) {
-    if (taskList[index].iterationsCompleted < taskList[index].iterationsTotal) {
+    if (taskList[index]?.iterationsCompleted < taskList[index]?.iterationsTotal) {
       setCurrentTaskIndex(index)
     }
   }
@@ -70,13 +71,25 @@ export function TaskListProvider({ children, ...rest }: TaskListProps) {
     }
   }
 
+  function deleteTask(index: number){
+    const updatedTaskList = [...taskList]
+    if (index > -1) {
+      setTasklist(updatedTaskList.splice(index, 1))
+
+      update(ref(database, 'users/' + user?.id), {
+        tasks: updatedTaskList
+      });
+    }
+  }
+
   return(
     <TaskListContext.Provider value={{ 
       taskList,
       currentTaskIndex,
       addNewTask,
       setCurrentTask,
-      addTaskIteration
+      addTaskIteration,
+      deleteTask,
     }}>
       {children}
     </TaskListContext.Provider>

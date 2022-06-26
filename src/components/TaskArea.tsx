@@ -16,9 +16,10 @@ export function TaskArea() {
   
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskIteractions, setNewTaskIteractions] = useState(1);
-  
+  const id = taskList.length === 0 ? 1 : (taskList[taskList.length - 1]?.index + 1)
+
   const newTask = {
-    index: taskList.length,
+    index: id,
     title: newTaskName,
     iterationsTotal: newTaskIteractions,
     iterationsCompleted: 0,
@@ -47,30 +48,26 @@ export function TaskArea() {
   return (
     <div className={styles.conteudo2}>
       <h2>Tarefas</h2>
-
-      <>
-        
+      <div className={styles.list}>
         {
           taskList.length > 0 ? taskList.map((task, index) => {
             return (
               <Task 
-                key={index}
-                index={task.index}
+                key={task.index}
+                index={index}
                 title={task.title}
                 iterationsTotal={task.iterationsTotal}
                 iterationsCompleted={task.iterationsCompleted}
-                onTaskClick={() => handleSetCurrentTask(task.index)}
-              />
-              
+                onTaskClick={() => handleSetCurrentTask(index)}
+              /> 
             )
-            
           }) : 
           <div className={styles.noTasks}>
             <Image src={noTasks} alt="x symbol"></Image>
             <h3>Voce ainda nao tem nenhuma tarefa cadastrada <br />Adicione uma tarefa para começar</h3>
           </div>
         }
-      </>
+      </div>
       <form onSubmit={handleAddTask} className={styles.form}>
         <input 
           className={styles.input}

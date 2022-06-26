@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
-
-//import styles from '../styles/PlayerProfile.module.scss';
+import styles from '../styles/Rank.module.scss';
 
 export function Rank() {
   const { playersRank } = useContext(PlayerContext);
@@ -9,23 +8,22 @@ export function Rank() {
   playersRank.sort((a, b) => b.totalIterations - a.totalIterations);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Level</th>
-          <th>Total iterations</th>
-        </tr>
-      </thead>
-      <tbody>
-        {playersRank.map(((player, key) => (
-          <tr key={key}>
-            <td>{player.name}</td>
-            <td>{player.level}</td>
-            <td>{player.totalIterations}</td>
-          </tr>
-        )))}
-      </tbody>
-    </table>
+    <div className={styles.container}>
+
+      <h2>Ranking</h2>
+
+      <div className={styles.table}>
+        <table>
+          <tbody>
+            {playersRank.map(((player, key) => (
+              <tr key={key}>
+                <td>{player.name} Lv. {player.level}</td>
+                <td className={styles.right}>{player.totalIterations} ciclos</td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   )
 }
