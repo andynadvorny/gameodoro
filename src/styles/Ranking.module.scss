@@ -1,0 +1,37 @@
+.container {
+  display: grid;
+  grid-template-columns:  1fr;
+  grid-template-rows: 1fr 12fr;
+  grid-template-areas: 
+  'header'
+  'conteudo1';
+  height: 100vh;
+  
+  .header {
+    grid-area: header;
+    position: relative;
+    height: 100%;
+  }
+  
+  .header::after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 5%;
+    width: 90%;
+    border-bottom: 1px solid var(--accent);
+  }
+  
+  .conteudo1 {
+    grid-area: conteudo1;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .rankWrapper {
+    width: 500px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
