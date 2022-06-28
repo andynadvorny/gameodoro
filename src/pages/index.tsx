@@ -8,7 +8,6 @@ import { LoginProvider } from '../contexts/LoginContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { PlayerProvider } from '../contexts/PlayerContext';
 import { TaskListProvider } from '../contexts/TaskListContext';
-import { Rank } from '../components/Rank';
 
 import styles from '../styles/Home.module.scss';
 
@@ -34,7 +33,6 @@ interface HomeProps {
                 <Countdown />
               </CountdownProvider>
               <PlayerProfile />
-              <Rank />
             </div>
             <TaskArea />
           </TaskListProvider>
