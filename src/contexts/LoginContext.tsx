@@ -1,6 +1,8 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
 import { auth, database } from '../services/firebase';
 import { onValue, ref, set } from 'firebase/database';
+import { TailSpin } from  'react-loader-spinner'
+
 import { 
   GoogleAuthProvider, 
   signInWithPopup, 
@@ -18,6 +20,8 @@ interface LoginContextData {
   user: User | undefined;
   login: () => Promise<void>;
   logout: () => void;
+  loading: Boolean;
+
 }
 
 interface LoginProviderProps {
@@ -28,6 +32,7 @@ export const LoginContext = createContext({} as LoginContextData);
 
 export function LoginProvider({ children } : LoginProviderProps) {
   const [user, setUser] = useState<User>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged( auth, (currentUser) => {
@@ -68,8 +73,11 @@ export function LoginProvider({ children } : LoginProviderProps) {
   }, []);
 
   const login = async () => {
+    
     const provider = new GoogleAuthProvider();
+    setLoading(true);
     const result = await signInWithPopup(auth, provider);
+    setLoading(false);
 
     if (result.user) {
       const { displayName, photoURL, uid } = result.user
@@ -83,21 +91,43 @@ export function LoginProvider({ children } : LoginProviderProps) {
         name: displayName,
         avatar: photoURL
       })
+    } else {
+      setLoading(false);
     }
+
   }
 
   const logout = async () => {
+    setLoading(true);
     await signOut(auth)
     setUser(undefined)
+    setLoading(false);
   }
-
-  return(
-    <LoginContext.Provider value={{ 
-      user,
-      login,
-      logout
-    }}>
-      {children}
-    </LoginContext.Provider>
-  )
+  
+    return(
+      <LoginContext.Provider value={{ 
+        user,
+        loading,
+        login,
+        logout
+      }}>
+        {loading ? (
+          <>
+            <div className="loader">
+              <TailSpin
+                height="150"
+                width="150"
+                color='#0be874'
+                ariaLabel='loading'
+              />
+            </div>
+          </>
+        ) : (<></>)}
+       
+      
+       {children}
+      </LoginContext.Provider>
+    )
+  
+  
 }
