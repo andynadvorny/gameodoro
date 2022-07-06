@@ -24,7 +24,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const { iterationsCompleted, completeIteration } = useContext(PlayerContext);
   const { addTaskIteration } = useContext(TaskListContext);
 
-  const [time, setTime] = useState(0.1 * 60);
+  const [time, setTime] = useState(25 * 60);
   const [isActive, setActive] = useState(false);
   const [hasFinished, setFinished] = useState(false); 
   const [isOnBreak, setIsOnBreak] = useState(false);
@@ -41,16 +41,16 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     setActive(false);
     setIsOnBreak(false);
     setFinished(false);
-    setTime(0.1 * 60);
+    setTime(1 * 60);
   }
 
   useEffect(() => {
     function startBreak() {
       setIsOnBreak(true);
       if (iterationsCompleted != 0 && (iterationsCompleted + 1) % 4 == 0) {
-        setTime(0.1 * 70);
+        setTime(15 * 60);
       } else {
-        setTime(0.1 * 50);
+        setTime(5 * 60);
       }
       setActive(true);
     }
