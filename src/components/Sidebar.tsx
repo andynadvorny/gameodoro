@@ -8,6 +8,8 @@ import { Info } from './Info';
 
 import styles from '../styles/Sidebar.module.scss';
 import closeButton from '../assets/images/close.svg';
+import helpButton from '../assets/images/help.svg';
+import crownButton from '../assets/images/crown.svg';
 
 export function Sidebar(props: any) {
   const { user, login, logout } = useContext(LoginContext);
@@ -51,14 +53,18 @@ export function Sidebar(props: any) {
   
   return (
     <div className={props.sidebar ? `${styles.sidebar} ${styles.sidebaropen}` : `${styles.sidebar}`}>
-
-      <div id={styles.button} onClick={props.showSidebar}><Image src={closeButton} alt='botão fechar'/></div>
+     
+      <div className={styles.icons}>
+        <span id={styles.closeButton} onClick={props.showSidebar}><Image src={closeButton} alt='botão fechar'/></span>
+        <span title="ranking" id={styles.crownButton} onClick={openRankModal}><Image src={crownButton} /></span>
+        <span title="como funciona" id={styles.helpButton} onClick={openInfoModal}><Image src={helpButton} /></span>
+      </div>
 
       <div className={styles.contents}>
         { user ? (
           <>
             <div className={styles.userProfile}>
-              <Image src={user.avatar} alt="user profile pic" className={styles.avatar} width="50px" height="50px" />
+              <Image src={user.avatar} alt="user profile pic" className={styles.avatar} width="80px" height="80px" />
               <p><span>{user.name}</span></p>
               <ExperienceBar />
             </div>
@@ -67,8 +73,6 @@ export function Sidebar(props: any) {
         ) : (
           <button type='button' onClick={login}>Login</button>
         )}
-        <button onClick={openInfoModal}>Como funciona</button>
-        <button onClick={openRankModal}>Ranking</button>
       </div>
 
       <Modal
@@ -89,6 +93,5 @@ export function Sidebar(props: any) {
         <Info />
       </Modal>
     </div>
-
   )
 }

@@ -1,10 +1,17 @@
+import Image from 'next/image';
 import styles from '../styles/Info.module.scss';
+import help from '../assets/images/help.svg';
 
 export function Info() {
   return (
     <div className={styles.container}>
 
-      <h2>Como funciona</h2>
+      <div className={styles.title}>
+        <span><Image src={help} /></span>
+        <h2>Como funciona</h2>
+      </div>
+
+      <hr />
 
       <div className={styles.wrapper}>
         <p>O Gameodoro é uma aplicação de realização de tarefas de estudo ou trabalho através do método pomodoro com elementos de gamificação. Trata-se de uma ferramenta simples e eficaz para gerenciamento do tempo e de incentivo para aumentar a produtividade.</p>

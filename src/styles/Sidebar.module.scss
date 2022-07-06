@@ -14,9 +14,26 @@
   z-index: 10;
   border-left: 2px solid var(--accent);
 
-  #button{
-    cursor: pointer;
-    justify-self: start;
+  .icons {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+
+    #closeButton{
+      grid-column: 1;
+      cursor: pointer;
+    }
+
+    #crownButton{
+      grid-column: 9;
+      justify-self: end;
+      cursor: pointer;
+    }
+
+    #helpButton{
+      grid-column: 10;
+      justify-self: end;
+      cursor: pointer;
+    }
   }
 
   .userProfile {
@@ -58,6 +75,7 @@
     width: 200px;
     height: 40px;
     background: var(--background);
+    margin: 2rem;
     color: var(--accent);
     border-radius: 15px;
     text-transform: uppercase;
