@@ -8,6 +8,7 @@ import { LoginProvider } from '../contexts/LoginContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import { PlayerProvider } from '../contexts/PlayerContext';
 import { TaskListProvider } from '../contexts/TaskListContext';
+import { Login } from '../components/Login';
 
 import styles from '../styles/Home.module.scss';
 
@@ -21,6 +22,7 @@ export default function Home(props: HomeProps) {
     <LoginProvider>     
       <PlayerProvider>
         <>
+          <Login />
           <Head>
             <title>Gameodoro</title>
           </Head>
