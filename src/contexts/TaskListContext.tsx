@@ -22,20 +22,17 @@ interface TaskListData {
 
 interface TaskListProps {
   children: ReactNode;
-  currentTaskIndex: number;
 }
 
 export const TaskListContext = createContext({} as TaskListData);
 
-export function TaskListProvider({ children, ...rest }: TaskListProps) {
+export function TaskListProvider({ children }: TaskListProps) {
   const { user } = useContext(LoginContext);
   const userRef = ref(database, 'users/' + user?.id)
   const [taskList, setTasklist] = useState<Task[]>([]);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   
   const currentTask = taskList[currentTaskIndex];
-
-  useEffect(() => setCurrentTaskIndex(rest.currentTaskIndex ?? 0), [rest.currentTaskIndex]);
 
   useEffect(() => {
     onValue(userRef, (snapshot) => {
