@@ -18,6 +18,7 @@ interface User {
 
 interface LoginContextData {
   user: User | undefined;
+  isLoggedIn: Boolean;
   login: () => Promise<void>;
   logout: () => void;
   loading: Boolean;
@@ -33,6 +34,7 @@ export const LoginContext = createContext({} as LoginContextData);
 export function LoginProvider({ children } : LoginProviderProps) {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged( auth, (currentUser) => {
@@ -91,23 +93,27 @@ export function LoginProvider({ children } : LoginProviderProps) {
         name: displayName,
         avatar: photoURL
       })
+
+      setIsLoggedIn(true)
     } else {
-      setLoading(false);
+      setLoading(false)
     }
 
   }
 
   const logout = async () => {
-    setLoading(true);
+    setLoading(true)
     await signOut(auth)
     setUser(undefined)
-    setLoading(false);
+    setLoading(false)
+    setIsLoggedIn(false)
   }
   
     return(
       <LoginContext.Provider value={{ 
         user,
         loading,
+        isLoggedIn,
         login,
         logout
       }}>
