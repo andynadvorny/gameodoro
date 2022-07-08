@@ -74,6 +74,12 @@ export function LoginProvider({ children } : LoginProviderProps) {
     })
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, [user])
+
   const login = async () => {
     
     const provider = new GoogleAuthProvider();
